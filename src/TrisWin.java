@@ -12,10 +12,9 @@ public class TrisWin extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	
-	JButton ok;
+	private JButton ok;
 	
 	public TrisWin (String vincitor) {
-		
 		
 		super(vincitor);
 		
