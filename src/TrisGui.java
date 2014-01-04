@@ -38,13 +38,19 @@ public class TrisGui extends JFrame implements ActionListener {
 	private String stringWin;
 	private static final String stringDraw = "Draw!!!";
 	
+	private static String p1;
+	private static String p2;	
+	private static String symbol1;
+	private static String symbol2;
 	
-	private int counterX;
-	private int counterO;
+	private int counterP1;
+	private int counterP2;
 	private int matches;
 
-	private JLabel labelX;
-	private JLabel labelO;
+	
+	private JLabel labelP1;
+	private JLabel labelP2;
+	
 	private JLabel labelMatches;
 
 	private TrisWin guiWin;
@@ -64,8 +70,8 @@ public class TrisGui extends JFrame implements ActionListener {
 		
 		
 		// LabelX
-		this.labelX = new JLabel("");
-		panelLabel.add("West", this.labelX);
+		this.labelP1 = new JLabel("");
+		panelLabel.add("West", this.labelP1);
 				
 				
 		// LabelPlay 
@@ -76,8 +82,8 @@ public class TrisGui extends JFrame implements ActionListener {
 		
 		
 		// LabelO
-		this.labelO = new JLabel("");
-		panelLabel.add("East", this.labelO);
+		this.labelP2 = new JLabel("");
+		panelLabel.add("East", this.labelP2);
 		
 		
 		// Panel Buttons
@@ -178,11 +184,11 @@ public class TrisGui extends JFrame implements ActionListener {
 	
 	private void resetGame () {
 		
-		this.counterX = 0;
-		this.counterO = 0;
+		this.counterP1 = 0;
+		this.counterP2 = 0;
 		this.matches = 0;
 		
-		this.turn = "X";		
+		this.turn = p1;		
 		
 		this.newGame();
 		
@@ -203,9 +209,9 @@ public class TrisGui extends JFrame implements ActionListener {
 		
 		this.stringWin = "";
 		
-		this.labelX.setText("X: " + this.counterX);
+		this.labelP1.setText(p1 + "  " + this.counterP1);
 		
-		this.labelO.setText("O: " + this.counterO);
+		this.labelP2.setText(this.counterP2 + "  " + p2);
 		
 		this.labelMatches.setText("Matches: " + this.matches);
 		
@@ -227,23 +233,23 @@ public class TrisGui extends JFrame implements ActionListener {
 	
 	private void switchTurn () {
 		
-		if (this.turn.equals("X")) {
+		if (this.turn.equals(p1)) {
 			
-			this.turn = "O";
+			this.turn = p2;
 			
 			if (!this.win && !this.draw) {
 				
-				this.message.setText("O plays");
+				this.message.setText(p2 + " plays");
 			
 			}
 			
-		}  else if (this.turn.equals("O")) {
+		}  else if (this.turn.equals(p2)) {
 			
-			this.turn = "X";
+			this.turn = p1;
 			
 			if (!this.win && !this.draw) {
 				
-				this.message.setText("X plays");
+				this.message.setText(p1 + " plays");
 			
 			}
 			
@@ -260,23 +266,23 @@ public class TrisGui extends JFrame implements ActionListener {
 		
 			try {
 			
-				if (this.turn.equals("X")) {
+				if (this.turn.equals(p1)) {
 										
-					if (!this.tris.getStringAtPos(i,j).equals("O")) {
+					if (!this.tris.getStringAtPos(i,j).equals(symbol2)) {
 						
-						this.tris.setX(i,j);
+						this.tris.setPos(i, j, symbol1);
 					
-						this.switchTurn();
-												
-						returnString = "X";
+						returnString = symbol1;
 						
-						if (this.tris.checkVincitorX()) {
+						this.switchTurn();
+						
+						if (this.tris.checkVincitor(symbol1)) {
 							
-							this.stringWin = "X Wins :)";
+							this.stringWin = p1 + " Wins :)";
 							
-							this.counterX++;
+							this.counterP1++;
 							
-							this.labelX.setText("X: " + this.counterX);
+							this.labelP1.setText(p1 + " " + this.counterP1);
 									
 							this.message.setText(this.stringWin);
 							
@@ -292,23 +298,23 @@ public class TrisGui extends JFrame implements ActionListener {
 					
 					}
 				
-				} else if (this.turn.equals("O")) {
+				} else if (this.turn.equals(p2)) {
 					
-					if (!this.tris.getStringAtPos(i,j).equals("X")) {
+					if (!this.tris.getStringAtPos(i,j).equals(symbol1)) {
 					
-						this.tris.setO(i,j);
+						this.tris.setPos(i, j, symbol2);
 					
 						this.switchTurn();
 						
-						returnString = "O";
+						returnString = symbol2;
 						
-						if (this.tris.checkVincitorO()) {
+						if (this.tris.checkVincitor(symbol2)) {
 							
-							this.stringWin = "O Wins :)";
+							this.stringWin = p2 + " Wins :)";
 							
-							this.counterO++;
+							this.counterP2++;
 							
-							this.labelO.setText("O: " + this.counterO);
+							this.labelP2.setText(this.counterP2 + "  " + p2);
 									
 							this.message.setText(this.stringWin);
 							
@@ -327,7 +333,7 @@ public class TrisGui extends JFrame implements ActionListener {
 				}
 				
 				
-				if (this.tris.checkDraw()) {
+				if (!this.win && this.tris.checkDraw()) {
 					
 					this.message.setText(TrisGui.stringDraw);
 					
@@ -514,6 +520,59 @@ public class TrisGui extends JFrame implements ActionListener {
 		} catch(Exception e){
 			
 			e.printStackTrace();
+		
+		}
+		
+		
+				
+		TrisGuiPlayer guiPlayer = new TrisGuiPlayer();
+		
+		guiPlayer.setVisible(true);
+		
+		
+		while (guiPlayer.isShowing()) {
+			
+			try {
+				
+				Thread.sleep(700);
+			
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			
+			}
+			
+		}
+		
+		
+		p1 = guiPlayer.getP1();
+		p2 = guiPlayer.getP2();
+		symbol1 = guiPlayer.getSymbol1();
+		symbol2 = guiPlayer.getSymbol2();
+		
+		
+		
+		if (p1 == null) {
+			
+			p1 = "p1";
+		
+		}
+		
+		if (p2 == null) {
+			
+			p2 = "p2";
+		
+		}
+		
+		if (symbol1 == null) {
+			
+			symbol1 = "1";
+		
+		}
+		
+		if (symbol2 == null) {
+			
+			symbol2 = "2";
 		
 		}
 		
