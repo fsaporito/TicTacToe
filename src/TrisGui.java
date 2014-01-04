@@ -512,10 +512,20 @@ public class TrisGui extends JFrame implements ActionListener {
 	
 	public static void main(String[] args) {
 		
-		try{ 
+		/*try{ 
 			   
 			UIManager.setLookAndFeel(
 			UIManager.getSystemLookAndFeelClassName());
+		
+		} catch(Exception e){
+			
+			e.printStackTrace();
+		
+		}*/
+		
+		try{ 
+			   
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		
 		} catch(Exception e){
 			
@@ -566,13 +576,13 @@ public class TrisGui extends JFrame implements ActionListener {
 		
 		if (symbol1 == null) {
 			
-			symbol1 = "1";
+			symbol1 = "X";
 		
 		}
 		
 		if (symbol2 == null) {
 			
-			symbol2 = "2";
+			symbol2 = "O";
 		
 		}
 		

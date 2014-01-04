@@ -47,10 +47,20 @@ public class TrisGuiPlayer extends JFrame implements ActionListener {
 	
 	public TrisGuiPlayer () {
 		
-		try{ 
-			   
+		/*try{ 
+		   
 			UIManager.setLookAndFeel(
 			UIManager.getSystemLookAndFeelClassName());
+	
+		} catch(Exception e){
+		
+			e.printStackTrace();
+	
+		}*/
+		
+		try{ 
+			   
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
 		
 		} catch(Exception e){
 			

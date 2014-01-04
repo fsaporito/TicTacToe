@@ -6,6 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
 
 
 public class TrisWin extends JFrame implements ActionListener {
@@ -17,6 +18,27 @@ public class TrisWin extends JFrame implements ActionListener {
 	public TrisWin (String vincitor) {
 		
 		super(vincitor);
+		
+		/*try{ 
+		   
+			UIManager.setLookAndFeel(
+			UIManager.getSystemLookAndFeelClassName());
+
+		} catch(Exception e){
+	
+			e.printStackTrace();
+
+		}*/
+	
+		try{ 
+		   
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+	
+		} catch(Exception e){
+		
+			e.printStackTrace();
+	
+		}
 		
 		this.setSize(200,200);
 		
