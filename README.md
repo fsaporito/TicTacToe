@@ -1,7 +1,7 @@
 TicTacToe
 ====
 
-Java implementation of the TickTackToe game
+Java implementation of the TicTacToe game
 
 ENG
 https://en.wikipedia.org/wiki/Tic-tac-toe
