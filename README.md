@@ -1,4 +1,4 @@
-TickTackToe
+TicTacToe
 ====
 
 Java implementation of the TickTackToe game
