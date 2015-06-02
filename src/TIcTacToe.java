@@ -2,16 +2,16 @@
 public class TIcTacToe {
 
 	
-	private String[][] matrix;
+	private String[][] table;
 	
 	
 	public TIcTacToe() {
 		
-		this.matrix = new String[3][3];
+		this.table = new String[3][3];
 		
 		for (int i = 0; i < 3; i++) {
 			
-			this.matrix[i] = new String[3];
+			this.table[i] = new String[3];
 			
 		}
 		
@@ -19,7 +19,7 @@ public class TIcTacToe {
 			
 			for (int j = 0; j < 3; j++) {
 				
-				this.matrix[i][j] = "";
+				this.table[i][j] = "";
 				
 			}
 			
@@ -32,7 +32,7 @@ public class TIcTacToe {
 		
 		if ( i >= 0 && i < 3 && j >= 0 && j < 3) {
 			
-			return this.matrix[i][j];
+			return this.table[i][j];
 		
 		} else {
 			
@@ -47,7 +47,7 @@ public class TIcTacToe {
 		
 		if ( i >= 0 && i < 3 && j >= 0 && j < 3) {
 			
-			this.matrix[i][j] = symbol;
+			this.table[i][j] = symbol;
 		
 		} else {
 			
@@ -66,11 +66,11 @@ public class TIcTacToe {
 		// Check Rows
 		for (int i = 0; (i < 3 && !vict); i++) {
 			
-			if (this.matrix[i][0].equals(symbol)) {
+			if (this.table[i][0].equals(symbol)) {
 				
-				if (this.matrix[i][1].equals(symbol)) {
+				if (this.table[i][1].equals(symbol)) {
 									
-					if (this.matrix[i][2].equals(symbol)) {
+					if (this.table[i][2].equals(symbol)) {
 						
 						vict = true;
 					
@@ -88,11 +88,11 @@ public class TIcTacToe {
 					
 			for (int j = 0; (j < 3 && !vict); j++) {
 							
-				if (this.matrix[0][j].equals(symbol)) {
+				if (this.table[0][j].equals(symbol)) {
 								
-					if (this.matrix[1][j].equals(symbol)) {
+					if (this.table[1][j].equals(symbol)) {
 									
-						if (this.matrix[2][j].equals(symbol)) {
+						if (this.table[2][j].equals(symbol)) {
 							
 							vict = true;
 						
@@ -110,11 +110,11 @@ public class TIcTacToe {
 		// Check First Diagonal
 		if (!vict) {
 			
-			if (this.matrix[0][0].equals(symbol)) {
+			if (this.table[0][0].equals(symbol)) {
 				
-				if (this.matrix[1][1].equals(symbol)) {
+				if (this.table[1][1].equals(symbol)) {
 					
-					if (this.matrix[2][2].equals(symbol)) {
+					if (this.table[2][2].equals(symbol)) {
 						
 						vict = true;
 						
@@ -130,11 +130,11 @@ public class TIcTacToe {
 		// Check Second Diagonal
 		if (!vict) {
 			
-			if (this.matrix[2][0].equals(symbol)) {
+			if (this.table[2][0].equals(symbol)) {
 				
-				if (this.matrix[1][1].equals(symbol)) {
+				if (this.table[1][1].equals(symbol)) {
 					
-					if (this.matrix[0][2].equals(symbol)) {
+					if (this.table[0][2].equals(symbol)) {
 						
 						vict = true;
 						
@@ -159,7 +159,7 @@ public class TIcTacToe {
 			
 			for (int j = 0; (j < 3 && draw); j++) {
 				
-				if (this.matrix[i][j].equals("")) {
+				if (this.table[i][j].equals("")) {
 					
 					draw = false;
 					
@@ -167,10 +167,17 @@ public class TIcTacToe {
 				
 			}
 			
-		}
-		
+		}		
 		
 		return draw;
+	
+	}
+	
+	
+	public String[][] getTable () {
+		
+		return this.table;
+		
 	}
 	
 	

@@ -14,6 +14,7 @@ public class TIcTacToeGui extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	private TIcTacToe tris;
+	private AI AIplayer;
 	
 	private JLabel message;
 	
@@ -21,16 +22,7 @@ public class TIcTacToeGui extends JFrame implements ActionListener {
 	private JButton newGameButton;
 	private JButton exitButton;
 	
-	
-	private JButton b00;
-	private JButton b01;
-	private JButton b02;
-	private JButton b10;
-	private JButton b11;
-	private JButton b12;
-	private JButton b20;
-	private JButton b21;
-	private JButton b22;
+	private JButton[][] buttonTable;
 	
 	private String turn;
 	private boolean win;
@@ -42,6 +34,7 @@ public class TIcTacToeGui extends JFrame implements ActionListener {
 	private static String p2;	
 	private static String symbol1;
 	private static String symbol2;
+	private static boolean AIenabled;
 	
 	private int counterP1;
 	private int counterP2;
@@ -121,59 +114,28 @@ public class TIcTacToeGui extends JFrame implements ActionListener {
 		panelTris.setLayout(new GridLayout(3,3));
 		this.add("Center", panelTris);
 		
+		// TableButton
+		this.buttonTable = new JButton[3][3];
 		
-		// Button 00
-		this.b00 = new JButton("00");
-		this.b00.addActionListener(this);
-		panelTris.add(this.b00);
-		
-		
-		// Button 01
-		this.b01 = new JButton("01");
-		this.b01.addActionListener(this);
-		panelTris.add(this.b01);
-
-
-		// Button 02
-		this.b02 = new JButton("02");
-		this.b02.addActionListener(this);
-		panelTris.add(this.b02);
-
-
-		// Button 10
-		this.b10 = new JButton("10");
-		this.b10.addActionListener(this);
-		panelTris.add(this.b10);
-
-
-		// Button 11
-		this.b11 = new JButton("11");
-		this.b11.addActionListener(this);
-		panelTris.add(this.b11);
-
-		
-		// Button 12
-		this.b12 = new JButton("12");
-		this.b12.addActionListener(this);
-		panelTris.add(this.b12);
-
-
-		// Button 20
-		this.b20 = new JButton("20");
-		this.b20.addActionListener(this);
-		panelTris.add(this.b20);
-		
-		
-		// Button 21
-		this.b21 = new JButton("21");
-		this.b21.addActionListener(this);
-		panelTris.add(this.b21);
+		for (int i = 0; i < 3; i++) {
 			
+			for (int j = 0; j < 3; j++) {
+				
+				this.buttonTable[i][j] = new JButton("" + i + j);
+				this.buttonTable[i][j].addActionListener(this);
+				panelTris.add(this.buttonTable[i][j]);
+				
+			}
+			
+		}
+
 		
-		// Button 22
-		this.b22 = new JButton("22");
-		this.b22.addActionListener(this);
-		panelTris.add(this.b22);
+		// AI
+		if (AIenabled) {
+			
+			this.AIplayer = new AI ();
+			
+		}
 			
 		
 		// Start New Game
@@ -217,16 +179,15 @@ public class TIcTacToeGui extends JFrame implements ActionListener {
 		
 		this.message.setText(this.turn + " plays");
 		
-		this.b00.setText("");
-		this.b01.setText("");
-		this.b02.setText("");
-		this.b10.setText("");
-		this.b11.setText("");
-		this.b12.setText("");
-		this.b20.setText("");
-		this.b21.setText("");
-		this.b22.setText("");
-		
+		for (int i = 0; i < 3; i++) {
+			
+			for (int j = 0; j < 3; j++) {
+				
+				this.buttonTable[i][j].setText("");
+				
+			}
+			
+		}
 		
 	}
 	
@@ -241,6 +202,17 @@ public class TIcTacToeGui extends JFrame implements ActionListener {
 				
 				this.message.setText(p2 + " plays");
 			
+			}
+			
+			if (AIenabled) {
+				
+				int values[] = this.AIplayer.move(this.tris.getTable());
+				
+				int i = values[0];
+				int j = values [1];
+				
+				this.buttonTable[i][j].doClick();
+				
 			}
 			
 		}  else if (this.turn.equals(p2)) {
@@ -368,125 +340,28 @@ public class TIcTacToeGui extends JFrame implements ActionListener {
 	
 		if (!this.win && !this.draw) {
 		
-			if (e.getSource() == this.b00) {
+			for (int i = 0; i < 3; i++) {
 			
-				String s = this.insertPos(0,0);
-			
-				if (!s.equals("")) {
+				for (int j = 0; j < 3; j++) {
 				
-					this.b00.setText(s);
+					if (e.getSource() == this.buttonTable[i][j]) {
+						
+						String s = this.insertPos(i,j);
+						
+						if (!s.equals("")) {
+						
+							this.buttonTable[i][j].setText(s);
+						
+						}
+						
+					}
 				
 				}
-			
-			
+				
 			}
-
-
-			if (e.getSource() == this.b01) {
 			
-				String s = this.insertPos(0,1);
-				
-				if (!s.equals("")) {
-				
-					this.b01.setText(s);
-				
-				}
-			
-			}
-		
-		
-			if (e.getSource() == this.b02) {
-			
-				String s = this.insertPos(0,2);
-				
-				if (!s.equals("")) {
-				
-					this.b02.setText(s);
-				
-				}
-			
-			}
-		
-		
-			if (e.getSource() == this.b10) {
-			
-				String s = this.insertPos(1,0);
-				
-				if (!s.equals("")) {
-				
-					this.b10.setText(s);
-				
-				}
-			
-			}
-		
-		
-			if (e.getSource() == this.b11) {
-			
-				String s = this.insertPos(1,1);
-				
-				if (!s.equals("")) {
-				
-					this.b11.setText(s);
-				
-				}
-			
-			}
-		
-		
-			if (e.getSource() == this.b12) {
-			
-				String s = this.insertPos(1,2);
-				
-				if (!s.equals("")) {
-				
-					this.b12.setText(s);
-				
-				}
-			
-			}		
-
-		
-			if (e.getSource() == this.b20) {
-			
-				String s = this.insertPos(2,0);
-				
-				if (!s.equals("")) {
-				
-					this.b20.setText(s);
-				
-				}
-			
-			}		
-
-		
-			if (e.getSource() == this.b21) {
-			
-				String s = this.insertPos(2,1);
-				
-				if (!s.equals("")) {
-				
-					this.b21.setText(s);
-				
-				}
-			
-			}		
-
-		
-			if (e.getSource() == this.b22) {
-			
-				String s = this.insertPos(2,2);
-				
-				if (!s.equals("")) {
-				
-					this.b22.setText(s);
-				
-				}
-			
-			}		
-		
 		}
-		
+			
 		
 		if (e.getSource() == this.resetButton) {
 			
@@ -559,6 +434,7 @@ public class TIcTacToeGui extends JFrame implements ActionListener {
 		p2 = guiPlayer.getP2();
 		symbol1 = guiPlayer.getSymbol1();
 		symbol2 = guiPlayer.getSymbol2();
+		AIenabled = guiPlayer.getAIenabled();
 		
 		
 		

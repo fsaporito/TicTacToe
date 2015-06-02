@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.JCheckBox;
 
 
 public class TIcTacToeGuiPlayer extends JFrame implements ActionListener {
@@ -34,14 +35,19 @@ public class TIcTacToeGuiPlayer extends JFrame implements ActionListener {
 	private JLabel p2SymbolLabel; // Player 2 Symbol Label
 	
 	
+	private JPanel panelAI; // AI Choice Panel
+	private JCheckBox AIcheckBox; // AI Choice CheckBox
+	private boolean AIenabled; // Boolean For AI Choice
+	
+	
 	private String p1; // Player 1 Name
 	private String p2; // Player 2 Name
 	private String symbol1; // Player 1 Symbol
 	private String symbol2; // Player 2 Symbol
-	
-	
+		
 	
 	private static final long serialVersionUID = 1L;
+	
 	
 	
 	
@@ -75,14 +81,24 @@ public class TIcTacToeGuiPlayer extends JFrame implements ActionListener {
 		
 		// Center Panel
 		this.pan = new JPanel();
-		this.pan.setLayout(new GridLayout(5,1));
-		this.add("Center", this.pan);
+		this.pan.setLayout(new GridLayout(6,1));
+		getContentPane().add("Center", this.pan);
 		
 		
 		// Error Label
 		this.titleLabel = new JLabel();
 		this.titleLabel.setText("Input The Names And The Symbols For Each Player: ");
 		this.pan.add(this.titleLabel);		
+		
+		
+		// AI Panel
+		this.panelAI = new JPanel();
+		this.pan.add(this.panelAI);
+		this.AIcheckBox = new JCheckBox("Player vs Computer");
+		this.panelAI.add(this.AIcheckBox);
+		this.AIcheckBox.addActionListener(this);
+		this.AIcheckBox.setSelected(false);
+		this.AIenabled = false;
 		
 		
 		// Player 1 Pan
@@ -154,6 +170,36 @@ public class TIcTacToeGuiPlayer extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 
+		if (arg0.getSource() == this.AIcheckBox) {
+			
+			if (this.AIcheckBox.isSelected()) {
+				
+				this.p2TextName.setText("Matrix");
+				
+				this.p2TextName.setEditable(false);
+				
+				this.p2TextSymbol.setText("M");
+				
+				this.p2TextSymbol.setEditable(false);
+				
+				this.AIenabled = true;
+				
+			} else {
+				
+				this.p2TextName.setText("");
+				
+				this.p2TextName.setEditable(true);
+				
+				this.p2TextSymbol.setText("");
+				
+				this.p2TextSymbol.setEditable(true);
+				
+				this.AIenabled = false;
+				
+				
+			}
+			
+		}
 		if (arg0.getSource() == this.ok) {
 			
 			boolean inputOk = true;
@@ -385,7 +431,17 @@ public class TIcTacToeGuiPlayer extends JFrame implements ActionListener {
 		return this.symbol2;
 	
 	}
-
+	
+	
+	
+	/**
+	 * @return the AIenabled boolean value
+	 */
+	public boolean getAIenabled() {
+		
+		return this.AIenabled;
+	
+	}
 	
 	
 	
