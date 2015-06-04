@@ -167,7 +167,7 @@ public class TIcTacToe {
 				
 			}
 			
-		}		
+		}	
 		
 		return draw;
 	
@@ -176,7 +176,30 @@ public class TIcTacToe {
 	
 	public String[][] getTable () {
 		
-		return this.table;
+		String[][] tableTmp = new String[3][3];
+		
+		for (int i = 0; i < 3; i++) {
+			
+			for (int j = 0; j < 3; j++) {
+				
+				tableTmp[i][j] = this.table[i][j];
+				
+			}
+			
+		}
+		
+		return tableTmp;
+		
+	}
+	
+	
+	public void setTable (String[][] table) {
+		
+		if (table != null) {
+			
+			this.table = table;
+			
+		}
 		
 	}
 	

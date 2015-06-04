@@ -133,7 +133,7 @@ public class TIcTacToeGui extends JFrame implements ActionListener {
 		// AI
 		if (AIenabled) {
 			
-			this.AIplayer = new AI ();
+			this.AIplayer = new AI (symbol1, symbol2);
 			
 		}
 			
@@ -189,29 +189,52 @@ public class TIcTacToeGui extends JFrame implements ActionListener {
 			
 		}
 		
+		if (AIenabled) {
+			
+			if (this.turn.equals(p2)) {
+				
+				try {
+					
+					int values[] = this.AIplayer.move(this.tris.getTable(), symbol2);
+					int i = values[0];
+					int j = values [1];
+					
+					this.buttonTable[i][j].doClick();
+					
+				} catch (OutOfBoundException e) {
+					
+					e.printStackTrace();
+				
+				}
+								
+			}
+			
+		}
+		
 	}
 	
 	
-	private void switchTurn () {
+	private void switchTurn () throws OutOfBoundException {
 		
 		if (this.turn.equals(p1)) {
-			
+						
 			this.turn = p2;
 			
 			if (!this.win && !this.draw) {
 				
 				this.message.setText(p2 + " plays");
 			
-			}
-			
-			if (AIenabled) {
+				if (AIenabled) {
+					
+					int values[] = this.AIplayer.move(this.tris.getTable(), symbol2);
+					
+					int i = values[0];
+					int j = values [1];
 				
-				int values[] = this.AIplayer.move(this.tris.getTable());
+					this.buttonTable[i][j].doClick();
 				
-				int i = values[0];
-				int j = values [1];
 				
-				this.buttonTable[i][j].doClick();
+				}
 				
 			}
 			
@@ -230,9 +253,7 @@ public class TIcTacToeGui extends JFrame implements ActionListener {
 	}
 	
 	
-	private String insertPos (int i, int j) {
-		
-		String returnString = "";
+	private void insertPos (int i, int j) {
 		
 		if (!this.win && !this.draw) {
 		
@@ -240,84 +261,88 @@ public class TIcTacToeGui extends JFrame implements ActionListener {
 			
 				if (this.turn.equals(p1)) {
 										
-					if (!this.tris.getStringAtPos(i,j).equals(symbol2)) {
+					this.tris.setPos(i, j, symbol1);
 						
-						this.tris.setPos(i, j, symbol1);
-					
-						returnString = symbol1;
-						
-						this.switchTurn();
-						
-						if (this.tris.checkVincitor(symbol1)) {
+					if (this.tris.checkVincitor(symbol1)) {
 							
-							this.stringWin = p1 + " Wins :)";
+						this.stringWin = p1 + " Wins :)";
 							
-							this.counterP1++;
+						this.counterP1++;
 							
-							this.labelP1.setText(p1 + " " + this.counterP1);
+						this.labelP1.setText(p1 + " " + this.counterP1);
 									
-							this.message.setText(this.stringWin);
+						this.message.setText(this.stringWin);
 							
-							this.win = true;
+						this.win = true;
 							
-							this.newGameButton.setText("Continue");
+						this.newGameButton.setText("Continue");
+						
+						this.guiWin = new TicTacToeGuiWin(this.message.getText());
 							
-							this.guiWin = new TicTacToeGuiWin(this.message.getText());
-							
-							this.guiWin.setVisible(true);
+						this.guiWin.setVisible(true);
 														
-						}
-					
 					}
-				
+						
+					this.switchTurn();
+					
 				} else if (this.turn.equals(p2)) {
 					
-					if (!this.tris.getStringAtPos(i,j).equals(symbol1)) {
-					
-						this.tris.setPos(i, j, symbol2);
-					
-						this.switchTurn();
-						
-						returnString = symbol2;
-						
-						if (this.tris.checkVincitor(symbol2)) {
+					this.tris.setPos(i, j, symbol2);
+												
+					if (this.tris.checkVincitor(symbol2)) {
 							
-							this.stringWin = p2 + " Wins :)";
+						this.stringWin = p2 + " Wins :)";
 							
-							this.counterP2++;
+						System.out.println(this.stringWin);
 							
-							this.labelP2.setText(this.counterP2 + "  " + p2);
+						this.counterP2++;
+							
+						this.labelP2.setText(this.counterP2 + "  " + p2);
 									
-							this.message.setText(this.stringWin);
-							
-							this.win = true;
-							
-							this.newGameButton.setText("Continue");
-							
-							this.guiWin = new TicTacToeGuiWin(this.message.getText());
-							
-							this.guiWin.setVisible(true);
-								
-						}
+						this.message.setText(this.stringWin);
 						
+						this.win = true;
+							
+						this.newGameButton.setText("Continue");
+							
+						this.guiWin = new TicTacToeGuiWin(this.message.getText());
+							
+						this.guiWin.setVisible(true);
+								
 					}
-				
+						
+					this.switchTurn();
+									
 				}
 				
 				
-				if (!this.win && this.tris.checkDraw()) {
+				if (!this.win) {
 					
-					this.message.setText(TIcTacToeGui.stringDraw);
+					if (this.tris.checkDraw()) {
+						
+						this.message.setText(TIcTacToeGui.stringDraw);
 					
-					this.draw = true;
+						this.draw = true;
 					
-					this.newGameButton.setText("Continue");
+						this.newGameButton.setText("Continue");
 					
-					this.guiWin = new TicTacToeGuiWin(this.message.getText());
+						System.out.println ("Draw 1");
+						
+						this.guiWin = new TicTacToeGuiWin(this.message.getText());
 					
-					this.guiWin.setVisible(true);
+						this.guiWin.setVisible(true);
 					
-					this.switchTurn();
+						if (this.turn.equals(p1)) {
+						
+							this.turn = p2;
+						
+						}  else if (this.turn.equals(p2)) {
+						
+							this.turn = p1;
+						
+						}
+						
+					}
 					
 				}
 				
@@ -330,14 +355,12 @@ public class TIcTacToeGui extends JFrame implements ActionListener {
 			
 		}
 		
-		return returnString;
-		
 	}
 	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-	
+		
 		if (!this.win && !this.draw) {
 		
 			for (int i = 0; i < 3; i++) {
@@ -346,11 +369,27 @@ public class TIcTacToeGui extends JFrame implements ActionListener {
 				
 					if (e.getSource() == this.buttonTable[i][j]) {
 						
-						String s = this.insertPos(i,j);
-						
-						if (!s.equals("")) {
-						
-							this.buttonTable[i][j].setText(s);
+						try {
+							
+							if (this.buttonTable[i][j].getText().equals("") && this.tris.getStringAtPos(i,j).equals("")) {
+								
+								if (this.turn.equals(p1)) {
+									
+									this.buttonTable[i][j].setText(symbol1);
+									
+								} else if (this.turn.equals(p2)) {
+									
+									this.buttonTable[i][j].setText(symbol2);
+									
+								}
+								
+								this.insertPos(i,j);
+								
+							}
+							
+						} catch (OutOfBoundException e1) {
+							
+							e1.printStackTrace();
 						
 						}
 						

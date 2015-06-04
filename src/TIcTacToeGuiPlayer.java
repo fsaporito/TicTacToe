@@ -174,11 +174,11 @@ public class TIcTacToeGuiPlayer extends JFrame implements ActionListener {
 			
 			if (this.AIcheckBox.isSelected()) {
 				
-				this.p2TextName.setText("Matrix");
+				this.p2TextName.setText("Skynet");
 				
 				this.p2TextName.setEditable(false);
 				
-				this.p2TextSymbol.setText("M");
+				this.p2TextSymbol.setText("S");
 				
 				this.p2TextSymbol.setEditable(false);
 				
